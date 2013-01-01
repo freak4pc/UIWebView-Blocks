@@ -47,6 +47,6 @@
                      loaded: (void (^)(UIWebView *webView)) loadedBlock
                      failed: (void (^)(UIWebView *webView, NSError *error)) failureBlock
                 loadStarted: (void (^)(UIWebView *webView)) loadStartedBlock
-                 shouldLoad: (BOOL (^)(UIWebView *webView, UIWebViewNavigationType navigationType)) shouldLoadBlock;
+                 shouldLoad: (BOOL (^)(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType)) shouldLoadBlock;
 
 @end

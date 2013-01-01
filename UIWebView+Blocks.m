@@ -10,7 +10,7 @@
 static void (^__loadedBlock)(UIWebView *webView);
 static void (^__failureBlock)(UIWebView *webView, NSError *error);
 static void (^__loadStartedBlock)(UIWebView *webView);
-static BOOL (^__shouldLoadBlock)(UIWebView *webView, UIWebViewNavigationType navigationType);
+static BOOL (^__shouldLoadBlock)(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType);
 
 static uint __loadedWebItems;
 
@@ -29,7 +29,7 @@ static uint __loadedWebItems;
                    loaded:(void (^)(UIWebView *webView))loadedBlock
                    failed:(void (^)(UIWebView *webView, NSError *error))failureBlock
               loadStarted:(void (^)(UIWebView *webView))loadStartedBlock
-               shouldLoad:(BOOL (^)(UIWebView *webView, UIWebViewNavigationType navigationType))shouldLoadBlock{
+               shouldLoad:(BOOL (^)(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType))shouldLoadBlock{
     __loadedWebItems    = 0;
     
     __loadedBlock       = loadedBlock;
@@ -49,20 +49,20 @@ static uint __loadedWebItems;
 +(void)webViewDidFinishLoad:(UIWebView *)webView{
     __loadedWebItems--;
     
-    if(__loadedBlock && (!TRUE_END_REPORT || __loadedWebItems > 0)){
+    if(__loadedBlock && (!TRUE_END_REPORT || __loadedWebItems == 0)){
         __loadedWebItems = 0;
         __loadedBlock(webView);
     }
 }
 
-+(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
++(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{    
     __loadedWebItems--;
     
     if(__failureBlock)
         __failureBlock(webView, error);
 }
 
-+(void)webViewDidStartLoad:(UIWebView *)webView{
++(void)webViewDidStartLoad:(UIWebView *)webView{    
     __loadedWebItems++;
     
     if(__loadStartedBlock && (!TRUE_END_REPORT || __loadedWebItems > 0))
@@ -71,7 +71,7 @@ static uint __loadedWebItems;
 
 +(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     if(__shouldLoadBlock)
-        return __shouldLoadBlock(webView, navigationType);
+        return __shouldLoadBlock(webView, request, navigationType);
     
     return YES;
 }
