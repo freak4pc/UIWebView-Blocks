@@ -49,4 +49,34 @@
                 loadStarted: (void (^)(UIWebView *webView)) loadStartedBlock
                  shouldLoad: (BOOL (^)(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType)) shouldLoadBlock;
 
+/**
+ Load a HTML string and get notified when the web page is loaded successfully or failed to load.
+ 
+ @param htmlString NSString containing HTML which should be loaded
+ @param loadedBlock Callback block called when loading is done
+ @param failureBlock Callback block called when loading
+ 
+ @return The generated UIWebView
+ */
++(UIWebView *)loadHTMLString:(NSString *)htmlString
+                      loaded:(void (^)(UIWebView *webView))loadedBlock
+                      failed:(void (^)(UIWebView *webView, NSError *error))failureBlock;
+
+/**
+ Load a HTML string and get notified when the web page is loaded successfully, failed to load or started to load.
+ Also set whether or not a certain page should be loaded.
+ 
+ @param htmlString NSString containing HTML which should be loaded.
+ @param loadedBlock Callback block called when loading is done
+ @param failureBlock Callback block called when loading
+ @param loadStartedBlock Callback block called when loading started
+ @param shouldLoadBlock Callback block determining whether or not a specific page should be loaded.
+ 
+ @return The generated UIWebView
+ */
++(UIWebView *)loadHTMLString:(NSString *)htmlString
+                      loaded:(void (^)(UIWebView *))loadedBlock
+                      failed:(void (^)(UIWebView *, NSError *))failureBlock
+                 loadStarted:(void (^)(UIWebView *webView))loadStartedBlock
+                  shouldLoad:(BOOL (^)(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType))shouldLoadBlock;
 @end
