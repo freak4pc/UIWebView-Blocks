@@ -4,7 +4,7 @@ UIWebView-Blocks
 UIWebView+Blocks is A simple category that implements blocks into UIWebView.
 This allows you to use the power of blocks instead of implementing a delegate.
 
-USAGE
+USAGE FOR NSURLRequests
 ------
 
 Instead of allocating a new UIWebView and assigning a delegate, just call one of the static methods:
@@ -33,6 +33,35 @@ Instead of allocating a new UIWebView and assigning a delegate, just call one of
                                          return YES;
                                      }];
                                  
+                             
+USAGE FOR HTML Strings
+-------
+
+    UIWebView *webView = [UIWebView loadHTMLString:htmlString
+                                            loaded:^(UIWebView *) {
+                                                NSLog(@"Loaded successfully");
+                                            }
+                                            failed:^(UIWebView *, NSError *) {
+                                                 NSLog(@"Failed loading %@", error);
+                                            }];
+    
+**OR**
+
+    UIWebView *webView = [UIWebView loadHTMLString:htmlString
+                                            loaded:^(UIWebView *) {
+                                                NSLog(@"Loaded successfully");
+                                            }
+                                            failed:^(UIWebView *, NSError *) {
+                                                 NSLog(@"Failed loading %@", error);
+                                            }
+                                       loadStarted:^(UIWebView *webView) {
+                                           NSLog(@"Started loading %@", webView.request.URL.absoluteString);
+                                       }
+                                        shouldLoad:^BOOL(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType) {
+                                            return YES;
+                                        }];
+
+
 The class will return the UIWebView object which you can later add as a subview to your current view.
 
 	webView.frame = [[UIScreen mainScreen] bounds];
