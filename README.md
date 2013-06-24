@@ -9,66 +9,76 @@ USAGE FOR NSURLRequests
 
 Instead of allocating a new UIWebView and assigning a delegate, just call one of the static methods:
 
-    UIWebView *webView = [UIWebView loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:@"http://google.com"]]
-                                         loaded:^(UIWebView *webView) {
-                                             NSLog(@"Loaded successfully");
-                                         }
-                                         failed:^(UIWebView *webView, NSError *error) {
-                                             NSLog(@"Failed loading %@", error);
-                                         }];
+```objc
+UIWebView *webView = [UIWebView loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:@"http://google.com"]]
+                                     loaded:^(UIWebView *webView) {
+                                         NSLog(@"Loaded successfully");
+                                     }
+                                     failed:^(UIWebView *webView, NSError *error) {
+                                         NSLog(@"Failed loading %@", error);
+                                     }];
+```
 
 **OR**
 
-	UIWebView *webView = [UIWebView loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:@"http://google.com"]]
-                                         loaded:^(UIWebView *webView) {
-                                             NSLog(@"Loaded successfully");
-                                         }
-                                         failed:^(UIWebView *webView, NSError *error) {
-                                             NSLog(@"Failed loading %@", error);
-                                         }
-                                    loadStarted:^(UIWebView *webView) {
-                                        NSLog(@"Started loading %@", webView.request.URL.absoluteString);
-                                    }
-                                     shouldLoad:^BOOL(UIWebView *webView, UIWebViewNavigationType navigationType) {
-                                         return YES;
-                                     }];
-                                 
-                             
+```objc
+UIWebView *webView = [UIWebView loadRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:@"http://google.com"]]
+                                     loaded:^(UIWebView *webView) {
+                                         NSLog(@"Loaded successfully");
+                                     }
+                                     failed:^(UIWebView *webView, NSError *error) {
+                                         NSLog(@"Failed loading %@", error);
+                                     }
+                                loadStarted:^(UIWebView *webView) {
+                                    NSLog(@"Started loading %@", webView.request.URL.absoluteString);
+                                }
+                                 shouldLoad:^BOOL(UIWebView *webView, UIWebViewNavigationType navigationType) {
+                                     return YES;
+                                 }];
+```
+
 USAGE FOR HTML Strings
 -------
 
-    UIWebView *webView = [UIWebView loadHTMLString:htmlString
-                                            loaded:^(UIWebView *) {
-                                                NSLog(@"Loaded successfully");
-                                            }
-                                            failed:^(UIWebView *, NSError *) {
-                                                 NSLog(@"Failed loading %@", error);
-                                            }];
-    
+```objc
+UIWebView *webView = [UIWebView loadHTMLString:htmlString
+                                        loaded:^(UIWebView *) {
+                                            NSLog(@"Loaded successfully");
+                                        }
+                                        failed:^(UIWebView *, NSError *) {
+                                             NSLog(@"Failed loading %@", error);
+                                        }];
+```
+
 **OR**
 
-    UIWebView *webView = [UIWebView loadHTMLString:htmlString
-                                            loaded:^(UIWebView *) {
-                                                NSLog(@"Loaded successfully");
-                                            }
-                                            failed:^(UIWebView *, NSError *) {
-                                                 NSLog(@"Failed loading %@", error);
-                                            }
-                                       loadStarted:^(UIWebView *webView) {
-                                           NSLog(@"Started loading %@", webView.request.URL.absoluteString);
-                                       }
-                                        shouldLoad:^BOOL(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType) {
-                                            return YES;
-                                        }];
+```objc
+UIWebView *webView = [UIWebView loadHTMLString:htmlString
+                                        loaded:^(UIWebView *) {
+                                            NSLog(@"Loaded successfully");
+                                        }
+                                        failed:^(UIWebView *, NSError *) {
+                                             NSLog(@"Failed loading %@", error);
+                                        }
+                                   loadStarted:^(UIWebView *webView) {
+                                       NSLog(@"Started loading %@", webView.request.URL.absoluteString);
+                                   }
+                                    shouldLoad:^BOOL(UIWebView *webView, NSURLRequest *request, UIWebViewNavigationType navigationType) {
+                                        return YES;
+                                    }];
+```
 
 
 The class will return the UIWebView object which you can later add as a subview to your current view.
 
-	webView.frame = [[UIScreen mainScreen] bounds];
-    [self.view addSubview: webView];
-    
+```objc
+webView.frame = [[UIScreen mainScreen] bounds];
+[self.view addSubview: webView];
+```
+
+
 ***Note:*** UIWebView+Blocks currently doesn't support the simultaneous usage of multiple UIWebViews in the same view.
-    
+
 TRUE ENDING REPORTING
 ---------------------
 
