@@ -1,5 +1,6 @@
 UIWebView-Blocks
 ================
+### **UIWebView+Blocks is no longer being actively maintained! The currently developed Swift version is [SMWebView](http://github.com/freak4pc/SMWebView).**
 
 UIWebView+Blocks is A simple category that implements blocks into UIWebView.
 This allows you to use the power of blocks instead of implementing a delegate.
